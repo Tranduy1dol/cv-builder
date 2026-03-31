@@ -1,0 +1,27 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[left=1.06cm,top=1.7cm,right=1.06cm,bottom=0.49cm]{geometry}
+
+\begin{document}
+\begin{center}
+    \textbf{\LARGE %CONFIG:name%}\\
+    \hrulefill
+\end{center}
+
+\begin{center}
+    \href{tel:%CONFIG:phone_link%}{%CONFIG:phone%} \textbullet \
+    \href{mailto:%CONFIG:email%}{%CONFIG:email%} \textbullet \
+    \href{%CONFIG:linkedin_url%}{%CONFIG:linkedin%} \textbullet \
+    \href{%CONFIG:github_url%}{%CONFIG:github%}
+\end{center}
+
+\vspace{0.5pt}
+
+%SECTIONS%
+
+\end{document}

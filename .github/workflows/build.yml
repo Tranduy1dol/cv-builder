@@ -1,0 +1,45 @@
+name: Build CV
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'sections/**'
+      - 'templates/**'
+      - 'cv.toml'
+      - 'build/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install tectonic
+        uses: wtfjoke/setup-tectonic@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build PDF
+        run: python3 build/build.py
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv
+          path: output/cv.pdf
+
+      - name: Push to personal site
+        run: |
+          git clone https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/Tranduy1dol/tranduy1dol.github.io.git _site
+          mkdir -p _site/public
+          cp output/cv.pdf _site/public/cv.pdf
+          cd _site
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add cv.pdf
+          git diff --cached --quiet || git commit -m "build: update cv.pdf"
+          git push

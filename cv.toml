@@ -1,0 +1,33 @@
+[profile]
+name = "Tran Manh Duy"
+phone = "096 326 9684"
+phone_link = "+84963269684"
+email = "tmd.iid2004@gmail.com"
+linkedin = "linkedin.com/in/tran-duy-uet"
+linkedin_url = "https://www.linkedin.com/in/tran-duy-uet/"
+github = "github.com/Tranduy1dol"
+github_url = "https://github.com/Tranduy1dol"
+
+[build]
+template = "default"
+output = "output/cv.pdf"
+
+[sections]
+# Order matters — this controls the section order in the PDF
+order = ["summary", "education", "skills", "experience", "projects"]
+
+[sections.summary]
+title = "Summary"
+
+[sections.education]
+title = "Education"
+
+[sections.skills]
+title = "Skills"
+
+[sections.experience]
+title = "Experience"
+
+[sections.projects]
+title = "Personal Projects"
+pagebreak_before = true
