@@ -8,6 +8,7 @@ on:
       - 'templates/**'
       - 'cv.toml'
       - 'build/**'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:
