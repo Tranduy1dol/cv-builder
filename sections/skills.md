@@ -1,13 +1,15 @@
-**Programming Languages:** **Rust** (Advanced), Golang, Typescript, Java
+**Programming Languages:** **Rust** (Advanced), **C/C++** (Intermediate), Golang, Typescript
 
-**Frameworks:** **Axum**, Actix, Tokio
+**Systems & Concurrency:** Tokio (async runtime), memory management (ownership, lifetimes, unsafe), concurrency primitives, trait-based design patterns, IPC (gRPC, message queues)
 
-**Database & Caching:** PostgreSQL, MySQL, MongoDB, Redis, SeaOrm, DieselOrm
+**Frameworks & Protocols:** Axum, Actix, Tonic (gRPC), Prost (Protocol Buffers)
 
-**System & Infrastructure:** Docker, Kubernetes, Kafka, RabbitMQ, Git/GitHub, Linux
+**Infrastructure:** Kafka, RabbitMQ, Redis, Docker, Kubernetes, Linux, Git/GitHub, CI/CD (GitHub Actions)
 
-**Cryptography & Blockchain:** ZKP (zk-SNARKs, zk-STARKs), Smart Contracts (Solidity/Rust), Layer 2 Protocols
+**Database:** PostgreSQL, MySQL, MongoDB, SeaOrm, DieselOrm
+
+**Cryptography & Security:** Custom ECC implementation, digital signatures (Schnorr, ECDSA), Montgomery field arithmetic, ZKP (zk-SNARKs, zk-STARKs)
+
+**Testing:** Unit/Integration testing, Testcontainers, Mockall, load testing (k6), benchmarking (Criterion)
 
 **Language:** English, Japanese
-
-**Other:** Document writing, Researching, Self-learning, Communication, Teamwork
