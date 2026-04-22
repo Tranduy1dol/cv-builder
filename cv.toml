@@ -29,5 +29,4 @@ title = "Skills"
 title = "Experience"
 
 [sections.projects]
-title = "Personal Projects"
-pagebreak_before = true
+title = "Projects"
