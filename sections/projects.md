@@ -1,3 +1,11 @@
+### Mini Search Engine (currently building)
+
+- **Stack**: C++, CMake, Make, GoogleTest, Clang toolchain.
+- Building a modular, high-performance search engine from scratch; **crawler** and **inverted index** modules are actively under development.
+- Implemented a **Unicode/Vietnamese-aware tokenizer** with stopword filtering as the text-processing foundation for downstream indexing.
+- Structured around a clean **library/app/tests separation** with CMake presets, `.clang-format`, and `.clang-tidy` for enforced code quality.
+- **Github**: \href{https://github.com/Tranduy1dol/search}{https://github.com/Tranduy1dol/search}
+
 ### High-Performance Trading Engine
 
 - **Stack**: Rust, Cargo Workspace (hexagonal architecture), Linux io\_uring, Criterion benchmarks.
