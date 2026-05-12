@@ -1,9 +1,7 @@
-**Programming Languages:** **Rust**, **C/C++**, Golang, Typescript
+**Programming Languages:** Python, Rust, Golang, C/C++, Typescript
 
-**Infrastructure:** Kafka, RabbitMQ, Redis, Docker, Kubernetes, Linux, Git/GitHub, CI/CD (GitHub Actions)
+**Infrastructure:** Kafka, Redis, Docker, Git/GitHub, CI/CD (GitHub Actions)
 
 **Database:** PostgreSQL, MySQL, MongoDB
-
-**Testing:** Unit/Integration testing, Testcontainers, Mockall, load testing (k6), benchmarking (Criterion)
 
 **Language:** English, Japanese
