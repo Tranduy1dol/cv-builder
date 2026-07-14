@@ -1,1 +1,3 @@
-Systems-oriented Rust developer with a strong foundation in Computer Science and low-level programming. Experienced in building high-performance, low-latency services with a deep understanding of systems programming concepts including memory management, concurrency, and inter-process communication (gRPC, message queues). Proficient in designing modular, trait-based architectures and real-time event processing pipelines using Kafka and async Rust (Tokio). Eager to apply systems-level expertise to security infrastructure and real-time telemetry platforms.
+Go backend engineer with 3 years of experience building high-throughput, event-driven microservices for crypto trading platforms — Kafka stream processing, gRPC services, and correctness-sensitive fintech workloads.
+
+Owns services end to end in Go, from re-architecting inherited pipelines to diagnosing and remediating production incidents at scale.

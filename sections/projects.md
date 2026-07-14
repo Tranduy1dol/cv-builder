@@ -1,18 +1,7 @@
-### High-Performance Trading Engine
+### Kotoba Press — Japanese-learning platform (personal)
 
-- **Stack**: Rust, Cargo Workspace (hexagonal architecture), Linux io\_uring, Criterion benchmarks.
-- Built a **single-threaded, zero-copy** trading engine with an **L3 limit order book** using hardware-accelerated **bitmap indexing** for O(1) best-bid/ask lookup and cancel operations (**~257 ns** taker match, **~138 ns** cancel).
-- Implemented an **io\_uring TCP gateway** for fully asynchronous, zero-syscall batched I/O with real-time **BBO market data broadcast** (fan-out on every book mutation) and a **write-ahead log** for crash-fault tolerance with async persistence and startup replay.
-- Designed a **zero-copy wire protocol** using packed C-repr structs transmitted directly over TCP with no serialization overhead, achieving **~107 µs** wire-to-wire round-trip latency (CI-verified via GitHub Actions).
-- Enforced **compile-time layer boundaries** (Domain / Application / Gateway) following hexagonal architecture for deterministic event processing.
-- **Github**: \href{https://github.com/Tranduy1dol/trading}{https://github.com/Tranduy1dol/trading}
-
-### High-Performance E-commerce Microservice
-
-- **Stack**: Rust (Axum, Tokio), PostgreSQL (SeaORM), Redis, Docker, GitHub Actions, k6.
-- Architected a scalable backend using **Clean Architecture** and **Cargo Workspace** pattern, decoupling business logic (`core`) from infrastructure (`infra`) with **trait-based port/adapter** interfaces.
-- Solved critical **race conditions** in inventory management ensuring data integrity under high concurrency (verified via Testcontainers integration tests).
-- Achieved **~8,000 RPS** with 4.51ms avg latency (P95: 7.61ms) through **Redis caching** strategies and **load testing** (`k6`).
-- Established a complete **CI/CD pipeline** using GitHub Actions for automated testing and Docker containerization.
-- **Github**: \href{https://github.com/Tranduy1dol/shopping-cart}{https://github.com/Tranduy1dol/shopping-cart}
-
+- Architected a hexagonal Go backend (Gin, MongoDB) with ports-and-adapters layering, domain-driven error handling, `slog` structured logging, Google OAuth2 + JWT auth, and composition-root DI across API, importer, and indexer binaries.
+- Integrated a custom C++17 BM25 search engine over gRPC/protobuf — client-streaming bulk indexing and gRPC-first search with a MongoDB regex fallback; the engine sustains ~15K docs/sec indexing and ~0.04 ms median query latency (30K qps peak).
+- Load-tested the Go API with k6: 19K req/s on health and 4.4K req/s on vocabulary queries (p99 < 32 ms), with stable latency scaling to 800 concurrent users.
+- Implemented SM-2 spaced-repetition scheduling with per-user decks and JLPT-filtered new-word discovery.
+@tech Go, Gin, gRPC, MongoDB, C++17, k6, Docker

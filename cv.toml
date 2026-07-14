@@ -1,32 +1,32 @@
 [profile]
-name = "Tran Manh Duy"
-phone = "096 326 9684"
-phone_link = "+84963269684"
-email = "tmd.iid2004@gmail.com"
+name = "Trần Mạnh Duy"
+phone = "0965 297 496"
+phone_link = "+84965297496"
+email = "manhduy.tran.dev@gmail.com"
+location = "Hà Nội, Vietnam"
 linkedin = "linkedin.com/in/tran-duy-uet"
 linkedin_url = "https://www.linkedin.com/in/tran-duy-uet/"
 github = "github.com/Tranduy1dol"
 github_url = "https://github.com/Tranduy1dol"
 
 [build]
-template = "default"
+template = "my"
 output = "output/cv.pdf"
 
 [sections]
-# Order matters — this controls the section order in the PDF
-order = ["summary", "education", "skills", "experience", "projects"]
+order = ["summary", "skills", "experience", "education"]
 
 [sections.summary]
-title = "Summary"
+title = "Profile"
 
 [sections.education]
 title = "Education"
+
+[sections.projects]
+title = "Projects"
 
 [sections.skills]
 title = "Skills"
 
 [sections.experience]
 title = "Experience"
-
-[sections.projects]
-title = "Projects"

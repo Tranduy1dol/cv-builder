@@ -1,15 +1,7 @@
-**Programming Languages:** **Rust** (Advanced), **C/C++** (Intermediate), Golang, Typescript
+**Languages:** Go (primary), Rust, C++
 
-**Systems & Concurrency:** Tokio (async runtime), memory management (ownership, lifetimes, unsafe), concurrency primitives, trait-based design patterns, IPC (gRPC, message queues)
+**Backend:** gRPC (protobuf), REST, WebSocket, hexagonal & event-driven microservices
 
-**Frameworks & Protocols:** Axum, Actix, Tonic (gRPC), Prost (Protocol Buffers)
+**Data & Streaming:** Apache Kafka, Redis, PostgreSQL, MongoDB
 
-**Infrastructure:** Kafka, RabbitMQ, Redis, Docker, Kubernetes, Linux, Git/GitHub, CI/CD (GitHub Actions)
-
-**Database:** PostgreSQL, MySQL, MongoDB, SeaOrm, DieselOrm
-
-**Cryptography & Security:** Custom ECC implementation, digital signatures (Schnorr, ECDSA), Montgomery field arithmetic, ZKP (zk-SNARKs, zk-STARKs)
-
-**Testing:** Unit/Integration testing, Testcontainers, Mockall, load testing (k6), benchmarking (Criterion)
-
-**Language:** English, Japanese
+**Infrastructure:** Docker, Kubernetes, ArgoCD, GitHub Actions, k6

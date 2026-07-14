@@ -2,10 +2,13 @@
 """
 CV Builder: Markdown sections → LaTeX → PDF via tectonic.
 
-Converts markdown files in sections/ to LaTeX fragments using a custom
-CV-aware converter targeting the arasgungore-CV template style, injects
-them into a LaTeX template with config from cv.toml, and compiles to PDF
-with tectonic.
+    Convert markdown files in sections/ to LaTeX fragments using a custom
+    CV-aware converter targeting the Steve Nguyen (my_template) style, injects
+    them into a LaTeX template with config from cv.toml, and compiles to PDF
+    with tectonic.
+
+    hint.md is reference notes only — it is NOT compiled. Copy content from
+    hint.md into sections/*.md, then run `make`.
 
 Section-specific conversion:
     summary   → plain paragraph text
@@ -55,11 +58,15 @@ def escape_latex(text: str) -> str:
 
 def _escape_text_only(text: str) -> str:
     """Escape LaTeX special chars in text segments only (not in URLs)."""
+    text = text.replace('%', '\\%')
     text = text.replace('&', '\\&')
     text = text.replace('#', '\\#')
     text = text.replace('\\_', '_')
     text = text.replace('_', '\\_')
     text = text.replace('~', '{\\raise.17ex\\hbox{$\\scriptstyle\\sim$}}')
+    # Convert Unicode dashes to LaTeX equivalents (em-dash before en-dash)
+    text = text.replace('\u2014', '---')
+    text = text.replace('\u2013', '--')
     return text
 
 
@@ -76,7 +83,7 @@ def convert_inline(text: str) -> str:
     def _replace_link(m):
         link_text = m.group(1)
         url = m.group(2)
-        key = f'%%LINK{counter[0]}%%'
+        key = f'@@LINK{counter[0]}@@'
         counter[0] += 1
         # Escape only the display text, not the URL
         escaped_text = _escape_text_only(link_text)
@@ -96,7 +103,7 @@ def convert_inline(text: str) -> str:
 
     def _replace_code(m):
         code_text = m.group(1)
-        key = f'%%CODE{code_counter[0]}%%'
+        key = f'@@CODE{code_counter[0]}@@'
         code_counter[0] += 1
         code_placeholders[key] = f'\\texttt{{{code_text}}}'
         return key
@@ -156,6 +163,37 @@ def convert_summary(text: str) -> str:
     )
 
 
+def _is_tech_line(text: str) -> str | None:
+    """Return tech list if line is an @tech marker, else None."""
+    if text.startswith('@tech '):
+        return text[6:].strip()
+    return None
+
+
+def _emit_bullets(output: list, bullets: list) -> None:
+    """Emit resumeItem bullets, with optional trailing @tech → resumeTechUsedItem."""
+    regular = []
+    tech = None
+    for b in bullets:
+        t = _is_tech_line(b)
+        if t is not None:
+            tech = convert_inline(t)
+        else:
+            regular.append(b)
+
+    if regular:
+        output.append('        \\resumeItemListStart')
+        for b in regular:
+            output.append(f'            \\resumeItem{{{b}}}')
+        if tech:
+            output.append(f'            \\resumeTechUsedItem{{{tech}}}')
+        output.append('        \\resumeItemListEnd')
+    elif tech:
+        output.append('        \\resumeItemListStart')
+        output.append(f'            \\resumeTechUsedItem{{{tech}}}')
+        output.append('        \\resumeItemListEnd')
+
+
 def convert_education(text: str) -> str:
     """Convert education section.
 
@@ -177,7 +215,6 @@ def convert_education(text: str) -> str:
             uni_name = _escape_text_only(parts[0])
             location = _escape_text_only(parts[1]) if len(parts) > 1 else ''
 
-            # Look for degree line
             degree_line = ''
             date_line = ''
             note_line = ''
@@ -186,35 +223,30 @@ def convert_education(text: str) -> str:
                 i += 1
                 next_line = lines[i]
                 if next_line.startswith('*') and next_line.endswith('*'):
-                    # It's a note, not a degree
                     note_line = next_line
                 elif '|' in next_line:
                     deg_parts = [p.strip() for p in next_line.split('|')]
                     degree_line = convert_inline(deg_parts[0])
                     date_line = _escape_text_only(deg_parts[1]) if len(deg_parts) > 1 else ''
+                    date_line = date_line.replace('--', '\\textbf{--}')
                 else:
                     degree_line = convert_inline(next_line)
 
-            # Check for note line after degree
             if i + 1 < len(lines) and not lines[i + 1].startswith('### '):
                 peek = lines[i + 1]
                 if peek.startswith('*') and peek.endswith('*'):
                     i += 1
                     note_line = peek
 
-            # Use resumeSubheading (4 args)
+            note_text = ''
+            if note_line:
+                note_text = convert_inline(note_line.strip('*').strip())
+
             output.append('')
-            output.append('    \\resumeSubheading')
+            output.append('    \\resumeEducationHeading')
             output.append(f'      {{{uni_name}}}{{{location}}}')
             output.append(f'      {{{degree_line}}}{{{date_line}}}')
-
-            # Add note as a sub-item if present
-            if note_line:
-                clean_note = note_line.strip('*').strip()
-                clean_note = _escape_text_only(clean_note)
-                output.append('      \\resumeSubHeadingListStart')
-                output.append(f'      \\small{{\\item{{\\textit{{{clean_note}}}}}}}')
-                output.append('      \\resumeSubHeadingListEnd')
+            output.append(f'      {{{note_text}}}')
 
         i += 1
 
@@ -306,9 +338,11 @@ def convert_experience(text: str) -> str:
                     while i < len(lines):
                         bline = lines[i].rstrip()
                         if bline.startswith('- '):
-                            item_text = bline[2:]
-                            item_text = convert_inline(item_text)
+                            item_text = convert_inline(bline[2:])
                             bullets.append(item_text)
+                            i += 1
+                        elif bline.startswith('@tech '):
+                            bullets.append(bline)
                             i += 1
                         elif bline == '':
                             i += 1
@@ -323,10 +357,7 @@ def convert_experience(text: str) -> str:
                             break
 
                     if bullets:
-                        output.append('        \\resumeItemListStart')
-                        for b in bullets:
-                            output.append(f'            \\resumeItem{{{b}}}')
-                        output.append('        \\resumeItemListEnd')
+                        _emit_bullets(output, bullets)
 
                     continue
 
@@ -389,9 +420,11 @@ def convert_projects(text: str) -> str:
             while i < len(lines):
                 bline = lines[i].rstrip()
                 if bline.startswith('- '):
-                    item_text = bline[2:]
-                    item_text = convert_inline(item_text)
+                    item_text = convert_inline(bline[2:])
                     bullets.append(item_text)
+                    i += 1
+                elif bline.startswith('@tech '):
+                    bullets.append(bline)
                     i += 1
                 elif bline == '':
                     i += 1
@@ -403,10 +436,7 @@ def convert_projects(text: str) -> str:
                     break
 
             if bullets:
-                output.append('          \\resumeItemListStart')
-                for b in bullets:
-                    output.append(f'            \\resumeItem{{{b}}}')
-                output.append('          \\resumeItemListEnd')
+                _emit_bullets(output, bullets)
 
             continue
 

@@ -1,5 +1,3 @@
-### University of Engineering and Technology, VNU | Hanoi, Vietnam
+### University of Engineering and Technology, VNU (UET-VNU) | Hanoi, Vietnam
 
-BS in Information Technology, CPA: 3.0/4.0 | Sept 2022 -- Sept 2026
-
-*Available for Full-time employment*
+B.Sc. Information Technology | Jul 2026
